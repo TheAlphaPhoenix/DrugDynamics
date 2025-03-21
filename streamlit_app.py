@@ -1,12 +1,5 @@
 import streamlit as st
 
-# Attempt to import matplotlib; if missing, display error and stop.
-try:
-    import matplotlib.pyplot as plt
-except ImportError:
-    st.error("Matplotlib is required to run this app. Please install it using 'pip install matplotlib' and restart the app.")
-    st.stop()
-
 # ----------------------------
 # Data Definitions
 # ----------------------------
