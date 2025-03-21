@@ -1,11 +1,17 @@
 import streamlit as st
-import matplotlib.pyplot as plt
+
+# Attempt to import matplotlib; if missing, display error and stop.
+try:
+    import matplotlib.pyplot as plt
+except ImportError:
+    st.error("Matplotlib is required to run this app. Please install it using 'pip install matplotlib' and restart the app.")
+    st.stop()
 
 # ----------------------------
 # Data Definitions
 # ----------------------------
 
-# Demo drug database (data sourced conceptually from reputable sources such as FDA, Micromedex, and clinical guidelines)
+# Demo drug database (data based on reputable sources such as FDA guidelines and Micromedex)
 drug_data = {
     "Aspirin": {
         "description": "Aspirin is a non-steroidal anti-inflammatory drug (NSAID) that works by inhibiting COX enzymes, reducing inflammation and platelet aggregation.",
@@ -57,7 +63,7 @@ drug_data = {
     }
 }
 
-# List of organs (used in avatar) – the demo focuses on these systems.
+# List of organs (used in the avatar)
 organs = ["Brain", "Lungs", "Heart", "Stomach", "Liver", "Kidneys"]
 
 # Approximate coordinates for each organ on a 0-1 scale (for plotting the avatar)
@@ -92,7 +98,7 @@ def plot_avatar(timeline_data):
         x, y = organ_coords[organ]
         rating = timeline_data.get(organ, 0)
         color = get_color_for_rating(rating)
-        size = 300 + 100 * rating  # increase marker size with rating
+        size = 300 + 100 * rating  # Increase marker size with rating
         
         plt.scatter(x, y, s=size, color=color, alpha=0.7, edgecolors="black")
         plt.text(x, y, organ, ha="center", va="center", fontsize=10, color="white", weight="bold")
@@ -126,7 +132,7 @@ st.subheader(f"Drug Information: {drug_choice}")
 st.markdown(f"**Description:** {selected_drug['description']}")
 st.markdown(f"**Mechanism:** {selected_drug['mechanism']}")
 
-# Side Effects Display
+# Display Side Effects
 st.markdown("**Common Side Effects:**")
 for effect in selected_drug["side_effects"]:
     st.write(f"- {effect}")
